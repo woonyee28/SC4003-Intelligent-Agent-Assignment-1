@@ -1,6 +1,21 @@
 import random
 
 def policy_iteration(Grid):
+    """
+    Perform policy iteration algorithm to find the optimal policy.
+    
+    Alternates between policy evaluation and policy improvement until convergence.
+    Starts with a random policy and iteratively improves it by selecting actions
+    that maximize expected utility based on current value estimates.
+    
+    Parameters:
+    Grid: The Grid object representing the MDP environment
+    
+    Returns:
+    Tuple[Dict[Tuple[int,int], str], List[List[float]]]: 
+        - The optimal policy mapping states to actions
+        - The corresponding utility values for each state
+    """
     policy = {}
     for i in range(Grid.size):
         for j in range(Grid.size):
@@ -53,6 +68,21 @@ def policy_iteration(Grid):
     return policy, U
 
 def policy_evaluation(Grid, policy, max_iterations=100, theta=0.01):
+    """
+    Evaluate a policy by computing its utility function.
+    
+    Iteratively computes the expected utility of each state under the given policy
+    until convergence or the maximum number of iterations is reached.
+    
+    Parameters:
+    Grid: The Grid object representing the MDP environment
+    policy (Dict[Tuple[int,int], str]): The policy to evaluate
+    max_iterations (int): Maximum number of iterations to perform (default: 100)
+    theta (float): Convergence threshold for utility differences (default: 0.01)
+    
+    Returns:
+    List[List[float]]: 2D array of utility values for each state under the given policy
+    """
     U = [[0 for _ in range(Grid.size)] for _ in range(Grid.size)]
     Ui = [[0 for _ in range(Grid.size)] for _ in range(Grid.size)]
     iteration = 0

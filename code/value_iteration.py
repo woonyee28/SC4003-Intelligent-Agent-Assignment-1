@@ -1,6 +1,19 @@
 import math
 
 def value_iteration(Grid):
+    """
+    Perform value iteration algorithm to compute optimal utilities for each state.
+    
+    Iteratively updates utility values until convergence using the Bellman equation.
+    Convergence is determined when the maximum change in utility (delta) falls
+    below the threshold defined by epsilon.
+    
+    Parameters:
+    Grid: The Grid object representing the MDP environment
+    
+    Returns:
+    U (List[List[float]]): 2D array of converged utility values for each state
+    """
     U = [[0 for _ in range(Grid.size)] for _ in range(Grid.size)]
     Ui = [[0 for _ in range(Grid.size)] for _ in range(Grid.size)]
     delta = math.inf
@@ -25,6 +38,19 @@ def value_iteration(Grid):
     return U
 
 def value_extract_policy(Grid, U):
+    """
+    Extract the optimal policy from computed utility values.
+    
+    For each state, determines the action that maximizes expected utility
+    based on the stochastic transition model and the computed utility values.
+    
+    Parameters:
+    Grid: The Grid object representing the MDP environment
+    U (List[List[float]]): 2D array of utility values for each state
+    
+    Returns:
+    policy (Dict[Tuple[int,int], str]): Dictionary mapping states to optimal actions
+    """
     policy = {}
     for row in range(Grid.size):
         for column in range(Grid.size):
@@ -64,6 +90,19 @@ def value_extract_policy(Grid, U):
     return policy
 
 def take_optimal_action(Grid, policy):
+    """
+    Execute the optimal action for the current state according to the policy.
+    
+    Retrieves the optimal action for the agent's current state from the policy
+    and updates the agent's position accordingly.
+    
+    Parameters:
+    Grid: The Grid object representing the MDP environment
+    policy (Dict[Tuple[int,int], str]): Dictionary mapping states to optimal actions
+    
+    Returns:
+    str or None: The action taken, or None if no action is defined for the current state
+    """
     current_state = Grid.cur_state
     if current_state in policy:
         optimal_action = policy[current_state]
