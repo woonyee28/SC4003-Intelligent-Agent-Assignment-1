@@ -25,35 +25,35 @@ def main(stdscr):
         "start_state": (3, 2),
         "size": 6
     }
-    map2 = {
-        "walls": [
-            # Vertical wall sections
-            *[(x, y) for x in range(3, 5) for y in [2, 7, 12]],
-            *[(x, y) for x in range(8, 10) for y in [0, 5, 10, 14]],
-            *[(x, y) for x in range(12, 14) for y in [3, 8, 13]],
+    # map2 = {
+    #     "walls": [
+    #         # Vertical wall sections
+    #         *[(x, y) for x in range(3, 5) for y in [2, 7, 12]],
+    #         *[(x, y) for x in range(8, 10) for y in [0, 5, 10, 14]],
+    #         *[(x, y) for x in range(12, 14) for y in [3, 8, 13]],
             
-            # Horizontal wall sections
-            *[(x, y) for y in range(6, 8) for x in [1, 6, 11, 14]],
-            *[(x, y) for y in range(11, 13) for x in [0, 5, 10]],
-            *[(x, y) for y in range(3, 5) for x in [7, 12]]
-        ],
-        "rewards": {
-            # Positive rewards
-            (0, 0): 1, (0, 14): 1, 
-            (5, 5): 1, (5, 10): 1,
-            (7, 7): 1, (7, 0): 1,
-            (10, 14): 1, (10, 5): 1,
-            (14, 0): 1, (14, 14): 1,
+    #         # Horizontal wall sections
+    #         *[(x, y) for y in range(6, 8) for x in [1, 6, 11, 14]],
+    #         *[(x, y) for y in range(11, 13) for x in [0, 5, 10]],
+    #         *[(x, y) for y in range(3, 5) for x in [7, 12]]
+    #     ],
+    #     "rewards": {
+    #         # Positive rewards
+    #         (0, 0): 1, (0, 14): 1, 
+    #         (5, 5): 1, (5, 10): 1,
+    #         (7, 7): 1, (7, 0): 1,
+    #         (10, 14): 1, (10, 5): 1,
+    #         (14, 0): 1, (14, 14): 1,
             
-            # Negative rewards
-            (2, 2): -1, (2, 12): -1,
-            (6, 6): -1, (6, 8): -1,
-            (9, 9): -1, (9, 4): -1,
-            (13, 13): -1, (13, 1): -1
-        },
-        "start_state": (7, 7),  # Near center of the map
-        "size": 20
-    }
+    #         # Negative rewards
+    #         (2, 2): -1, (2, 12): -1,
+    #         (6, 6): -1, (6, 8): -1,
+    #         (9, 9): -1, (9, 4): -1,
+    #         (13, 13): -1, (13, 1): -1
+    #     },
+    #     "start_state": (7, 7),  # Near center of the map
+    #     "size": 20
+    # }
     
     # map2 = {
     #     "walls": [
@@ -82,6 +82,31 @@ def main(stdscr):
     #     "start_state": (5, 1),
     #     "size": 10
     # }
+    map2 = {
+        "walls": [
+            (1, 1), (1, 14), (4, 4), (4, 9), (7, 0), (7, 14),
+            (9, 4), (9, 9), (12, 2), (12, 7), (14, 4), (14, 12)
+        ],
+        "rewards": {
+            (0, 0): 1, (0, 14): 1, 
+            (5, 5): 1, (5, 10): 1,
+            (7, 7): 1, (7, 12): 1,
+            (10, 0): 1, (10, 14): 1,
+            (14, 0): 1, (14, 14): 1,
+            
+            (2, 2): -1, (2, 12): -1,
+            (6, 6): -1, (6, 13): -1,
+            (9, 3): -1, (9, 10): -1,
+            (13, 5): -1, (13, 9): -1,
+            (4, 0): -1, (4, 14): -1,
+            (11, 2): -1, (11, 12): -1
+        },
+        "start_state": (7, 7), 
+        "size": 15,
+        "white_reward": -0.04, 
+        "discount": 0.95,     
+        "intended_prob": 0.8   
+    }
     current_map = map1
     current_algorithm = "value"
     while True:
@@ -249,8 +274,7 @@ def visualize_grid(stdscr, grid, utilities, policy, algorithm):
     current_policy = policy.get(current_state, "None")
     
     stdscr.addstr(legend_y + 12, legend_x, f"Current state: {current_state}")
-    stdscr.addstr(legend_y + 13, legend_x, f"Utility: {current_utility:.4f}")
-    stdscr.addstr(legend_y + 14, legend_x, f"Policy: {current_policy}")
+    stdscr.addstr(legend_y + 13, legend_x, f"Policy: {current_policy}")
     
     stdscr.refresh()
 
